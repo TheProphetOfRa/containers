@@ -137,7 +137,7 @@ namespace containers
         {
             for (unsigned int i = i_size ; i_size < m_size ; ++i)
             {
-                m_data[i]->~T();
+                m_data[i].~T();
             }
         }
         else
