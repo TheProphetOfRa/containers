@@ -33,4 +33,4 @@ jobs:
         
     - name: Run tests
       run: |
-        sh ./build/test/Containers_tst
+        build/test/Containers_tst
