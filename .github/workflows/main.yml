@@ -21,7 +21,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Run cmake
-      run: cmake -G make -B build
+      run: cmake -G "Unix makefiles" -B build
       
     - name: Build Project
       run: |
