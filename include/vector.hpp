@@ -19,8 +19,8 @@ namespace containers
         unsigned int capacity() const { return m_capacity; }
         unsigned int size() const { return m_size; }
         bool empty() const { return m_size == 0; }
-        iterator begin() { return m_data; }
-        iterator end() { return m_data + size(); }
+        iterator begin() const { return m_data; }
+        iterator end() const { return m_data + size(); }
         T& front() const { return m_data[0]; }
         T& back() const { return m_data[m_size - 1]; }
         void push_back(const T& i_value);
@@ -45,19 +45,28 @@ namespace containers
     
     template<typename T>
     Vector<T>::Vector()
-    : Vector<T>(Vector::kDefaultCapacity)
+    : Vector<T>(0)
     {
     }
 
     template<typename T>
-    Vector<T>::Vector(unsigned int i_capacity)
+    Vector<T>::Vector(unsigned int i_size)
     : m_size(0)
     , m_data(nullptr)
     {
-        assert(i_capacity != 0);
-
         m_objSize = sizeof(T);
-        reserve(i_capacity);
+        
+        reserve(Vector::kDefaultCapacity);
+        
+        while (m_capacity < i_size)
+        {
+            reserve(m_capacity * 2);
+        }
+        
+        for (int i = 0 ; i < i_size ; ++i)
+        {
+            push_back(T());
+        }
     }
     
     template<typename T>
@@ -73,12 +82,13 @@ namespace containers
     template<typename T>
     Vector<T>::Vector(const Vector<T>& i_vec)
     {
+        m_objSize = sizeof(T);
         m_data = nullptr;
         m_size = i_vec.size();
         m_capacity = i_vec.capacity();
         
         reserve(m_capacity);
-        memcpy(m_data, i_vec.begin(), i_vec.size());
+        memcpy(m_data, i_vec.begin(), i_vec.size() * m_objSize);
     }
     
     template <typename T>
@@ -162,7 +172,7 @@ namespace containers
         m_capacity(i_vec.capacity());
         
         reserve(m_capacity);
-        memcpy(m_data, i_vec.begin(), i_vec.size());
+        memcpy(m_data, i_vec.begin(), i_vec.size() * m_objSize);
         
         return *this;
     }
