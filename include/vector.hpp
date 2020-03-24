@@ -27,7 +27,7 @@ namespace containers
         void pop_back();
 
         void reserve(unsigned int i_capacity);
-        void resize(unsigned int i_size);
+        void resize(unsigned int i_size, const T& i_value = T());
 
         T& operator[](unsigned int i_index);
         Vector<T>& operator=(const Vector<T>&);
@@ -118,6 +118,32 @@ namespace containers
         }
         
         m_capacity = i_capacity;
+    }
+    
+    template<typename T>
+    void Vector<T>::resize(unsigned int i_size, const T& i_value/* = T()*/)
+    {
+        if (i_size < m_size)
+        {
+            for (unsigned int i = i_size ; i_size < m_size ; ++i)
+            {
+                m_data[i]->~T();
+            }
+        }
+        else
+        {
+            while (m_capacity < i_size)
+            {
+                reserve(m_capacity * 2);
+            }
+            
+            for (unsigned int i = m_size ; i < i_size ; ++i)
+            {
+                m_data[i] = i_value;
+            }
+        }
+        
+        m_size = i_size;
     }
     
     template<typename T>
