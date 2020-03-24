@@ -69,6 +69,11 @@ TEST(VectorCapacity, reserve)
     
     ASSERT_EQ(v.capacity(), 1000);
     ASSERT_EQ(v.size(), 0);
+    
+    v.reserve(100);
+    
+    ASSERT_EQ(v.capacity(), 1000);
+    ASSERT_EQ(v.size(), 0);
 }
 
 TEST(VectorCapacity, upSize)
@@ -104,7 +109,6 @@ TEST(VectorCapacity, upSize)
         else
             ASSERT_EQ(v[i], 3);
     }
-    
 }
 
 #pragma mark - IntegrityTest
