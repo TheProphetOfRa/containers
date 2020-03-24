@@ -23,14 +23,11 @@ jobs:
     - name: Install submodules
       run: git submodule update --init --recursive
 
-    - name: Run cmake 
+    - name: Build 
       run: |
-          export CC=/usr/bin/clang
-          export CXX=/usr/bin/clang++
-          cmake -G "Unix Makefiles" -B build
-      
-    - name: Build Project
-      run: |
+        export CC=/usr/bin/clang
+        export CXX=/usr/bin/clang++
+        cmake -G "Unix Makefiles" -B build
         cd build
         make all
         
