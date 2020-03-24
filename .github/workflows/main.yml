@@ -30,9 +30,7 @@ jobs:
         cmake -G "Unix Makefiles" -B build
         cd build
         make all
-        cd ..
-        find . -name Containers_tst
         
     - name: Run tests
       run: |
-        sh build/Containers_tst
+        sh ./build/test/Containers_tst
