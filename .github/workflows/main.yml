@@ -23,6 +23,11 @@ jobs:
     - name: Install submodules
       run: git submodule update --init --recursive
 
+    - name: Setup environment
+      run: |
+          export CC=clang
+          export CXX=clang++
+
     - name: Run cmake
       run: cmake -G "Unix Makefiles" -B build
       
