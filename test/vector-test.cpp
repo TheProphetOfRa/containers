@@ -3,7 +3,7 @@
 
 #pragma mark - Constructors
 
-TEST(Constructors, empty)
+TEST(VectorConstructor, empty)
 {
     containers::Vector<int> v;
     
@@ -11,7 +11,7 @@ TEST(Constructors, empty)
     ASSERT_EQ(v.capacity(), 128);
 }
 
-TEST(Constructors, size)
+TEST(VectorConstructor, size)
 {
     containers::Vector<int> v(128);
     
@@ -24,7 +24,7 @@ TEST(Constructors, size)
     }
 }
 
-TEST(Constructors, sizeInitial)
+TEST(VectorConstructor, sizeInitial)
 {
     containers::Vector<int> v(128, 5);
     
@@ -37,7 +37,7 @@ TEST(Constructors, sizeInitial)
     }
 }
 
-TEST(Constructors, copy)
+TEST(VectorConstructor, copy)
 {
     containers::Vector<int> init(200, 5);
     
@@ -58,6 +58,53 @@ TEST(Constructors, copy)
     {
         ASSERT_EQ(v[i], init[i]) << "Index is " << i;
     }
+}
+
+#pragma mark - Capacity
+
+TEST(VectorCapacity, reserve)
+{
+    containers::Vector<int> v;
+    v.reserve(1000);
+    
+    ASSERT_EQ(v.capacity(), 1000);
+    ASSERT_EQ(v.size(), 0);
+}
+
+TEST(VectorCapacity, upSize)
+{
+    containers::Vector<int> v(100, 5);
+    
+    ASSERT_EQ(v.size(), 100);
+    
+    for (int i = 0 ; i < 100 ; ++i)
+    {
+        ASSERT_EQ(v[i], 5);
+    }
+    
+    v.resize(200);
+    
+    ASSERT_EQ(v.size(), 200);
+    
+    for (int i = 0 ; i < 200 ; ++i)
+    {
+        ASSERT_EQ(v[i], i < 100 ? 5 : 0);
+    }
+    
+    v.resize(300, 3);
+    
+    ASSERT_EQ(v.size(), 300);
+    
+    for (int i = 0 ; i < 300 ; ++i)
+    {
+        if (i < 100)
+            ASSERT_EQ(v[i], 5);
+        else if (i < 200)
+            ASSERT_EQ(v[i], 0);
+        else
+            ASSERT_EQ(v[i], 3);
+    }
+    
 }
 
 #pragma mark - IntegrityTest
