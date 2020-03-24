@@ -85,9 +85,9 @@ namespace containers
         m_objSize = sizeof(T);
         m_data = nullptr;
         m_size = i_vec.size();
-        m_capacity = i_vec.capacity();
+        m_capacity = 0; //Needs to be 0 so that reserve can allocate more
         
-        reserve(m_capacity);
+        reserve(i_vec.capacity());
         memcpy(m_data, i_vec.begin(), i_vec.size() * m_objSize);
     }
     
@@ -118,6 +118,11 @@ namespace containers
     template<typename T>
     void Vector<T>::reserve(unsigned int i_capacity)
     {
+        if (i_capacity <= m_capacity)
+        {
+            return;
+        }
+        
         if (m_data == nullptr)
         {
             m_data = (T*)malloc(i_capacity * m_objSize);
